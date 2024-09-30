@@ -20,4 +20,8 @@ public class DishService {
 		return dishRepository.findAll();
 	}
 
+	public void saveDish(Dish dish) {
+		dishRepository.save(dish);
+	}
+
 }

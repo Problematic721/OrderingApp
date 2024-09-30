@@ -8,26 +8,26 @@
 </head>
 <body>
 	<div th:replace="~{'fragments/navbar' :: navbar}"></div>
-
 	<div class="container mt-5">
 		<div class="text-end mb-3">
 			<a href="/add-dish" class="btn btn-success">Add Dish to Menu</a>
 		</div>
 		<h1 class="text-center">Menu</h1>
 		<div class="row">
-			<div class="col-12 col-sm-6 col-md-4 mb-4">
-				<div class="card">
-					<img src="/static/resources/burger.png" class="card-img-top"
-						alt="Burger">
+			<div class="col-12 col-sm-6 col-md-4 mb-4" th:each="dish : ${dishes}">
+				<div class="card dish-card">
+					<img
+						th:src="${dish.imageUrl != null && dish.imageUrl != '' ?  dish.imageUrl : '/img/placeholder.jpg'}"
+						alt="Dish Image" class="card-img-top">
 					<div class="card-body">
-						<h5 class="card-title">Burger</h5>
-						<p class="card-text">A delicious beef burger with cheese and
-							lettuce.</p>
+						<h5 class="card-title" th:text="${dish.name}"></h5>
+						<p class="card-text" th:text="${dish.description}"></p>
 						<p class="card-text">
-							<strong>Price: $10.99</strong>
+							<strong th:text="'NT$: ' + ${dish.price}"></strong>
 						</p>
-						<a href="#" class="btn btn-danger float-end"> <i
-							class="bi bi-trash"></i> Remove
+						<a href="@{/remove/{id} (id=${dish.id})}"
+							class="btn btn-danger float-end"> <i class="bi bi-trash"></i>
+							Remove
 						</a>
 					</div>
 				</div>

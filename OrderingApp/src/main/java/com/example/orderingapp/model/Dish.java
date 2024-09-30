@@ -15,21 +15,24 @@ public class Dish {
 
 	private String description;
 
-	private String image;
+	private String imageUrl;
 
 	@NotNull(message = "Price must not be empty")
 	@Column(nullable = false)
 	@Min(value = 0, message = "Price must be greater than or equal to 0")
 	private double price;
 	
+	public Dish() {
+	}
+	
 	public Dish(long id, @NotBlank(message = "Name must not be empty") String name, String description,
-			String image,
+			String imageUrl,
 			@NotNull(message = "Price must not be empty") @Min(value = 0, message = "Price must be greater than or equal to 0") double price) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.image = image;
+		this.imageUrl = imageUrl;
 		this.price = price;
 	}
 
@@ -57,12 +60,12 @@ public class Dish {
 		this.description = description;
 	}
 
-	public String getImage() {
-		return image;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	public double getPrice() {
