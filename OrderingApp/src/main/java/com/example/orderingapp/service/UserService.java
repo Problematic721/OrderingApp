@@ -1,11 +1,11 @@
-package com.example.service;
+package com.example.orderingapp.service;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.example.model.User;
-import com.example.repository.UserRepository;
+import com.example.orderingapp.model.User;
+import com.example.orderingapp.repository.UserRepository;
 
 @Service
 public class UserService {

@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.orderingapp.model;
 
 public enum Role {
 	STAFF,

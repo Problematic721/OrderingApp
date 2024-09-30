@@ -1,9 +1,9 @@
-package com.example.service;
+package com.example.orderingapp.service;
 
 import org.springframework.stereotype.Service;
 
-import com.example.model.CustomerTable;
-import com.example.repository.CustomerTableRepository;
+import com.example.orderingapp.model.CustomerTable;
+import com.example.orderingapp.repository.CustomerTableRepository;
 
 @Service
 public class CustomerTableService {

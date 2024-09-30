@@ -1,10 +1,10 @@
-package com.example.model;
+package com.example.orderingapp.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 @Entity
-public class MenuItem {
+public class Dish {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -22,7 +22,7 @@ public class MenuItem {
 	@Min(value = 0, message = "Price must be greater than or equal to 0")
 	private double price;
 	
-	public MenuItem(long id, @NotBlank(message = "Name must not be empty") String name, String description,
+	public Dish(long id, @NotBlank(message = "Name must not be empty") String name, String description,
 			String image,
 			@NotNull(message = "Price must not be empty") @Min(value = 0, message = "Price must be greater than or equal to 0") double price) {
 		super();

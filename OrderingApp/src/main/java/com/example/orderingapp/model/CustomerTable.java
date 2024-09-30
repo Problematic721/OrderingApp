@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.orderingapp.model;
 
 import java.util.UUID;
 
