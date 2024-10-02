@@ -24,4 +24,14 @@ public class DishService {
 		dishRepository.save(dish);
 	}
 
+	public Dish getDishById(Long dishId) {
+		return dishRepository.findById(dishId)
+				.orElseThrow(() -> new IllegalArgumentException("Dish ID not found!"));
+	}
+
+	public void deleteById(Long dishId) {
+		dishRepository.deleteById(dishId);
+		
+	}
+
 }

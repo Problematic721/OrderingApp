@@ -1,16 +1,14 @@
 @charset "UTF-8";
 
 .file-drop-area {
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	padding: 25px;
 	border: 2px dashed #ccc;
-	border-radius: 5px;
-	background-color: #f9f9f9;
+	padding: 20px;
+	text-align: center;
 	cursor: pointer;
+}
+
+.file-drop-area.dragover {
+	border-color: #0062cc;
 }
 
 .file-drop-area input[type="file"] {
@@ -23,13 +21,21 @@
 	cursor: pointer;
 }
 
-.dish-card {
-    width: 18rem; 
-    margin: 15px auto;
+.dish-img {
+	height: 200px;
+	width: auto;  
+	object-fit: contain;
+	width: 100%;
+	display: block;
+	margin: 0 auto; 
 }
 
-.dish-img {
-    height: 200px;
-    object-fit: cover;
-    width: 100%;
+.description {
+	height: 50px;              
+    overflow: hidden;          
+    text-overflow: ellipsis;   
+    display: -webkit-box;      
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;   
+    line-clamp: 2; 
 }

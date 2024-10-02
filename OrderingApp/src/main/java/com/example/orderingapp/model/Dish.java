@@ -10,10 +10,14 @@ public class Dish {
 	private long id;
 
 	@NotBlank(message = "Name must not be empty")
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String name;
 
 	private String description;
+	
+	@ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
 	private String imageUrl;
 
@@ -76,4 +80,12 @@ public class Dish {
 		this.price = price;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
 }
