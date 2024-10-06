@@ -19,65 +19,65 @@
 						<h2>Add Dish to Menu</h2>
 					</div>
 					<div class="card-body">
-						<form th:action="@{/dashboard/add}" th:object="${dish}" method="post"
-							enctype="multipart/form-data">
-							<div class="mb-3">
-								<label for="name" class="form-label">Dish Name</label> <input
-									type="text" class="form-control" id="name" th:field="*{name}"
-									required>
-								<div th:if="${#fields.hasErrors('name')}"
-									class="alert alert-danger">
-									<span th:errors="*{name}"></span>
-								</div>
+						<form th:action="@{/dashboard/add}" th:object="${dish}"
+							method="post" enctype="multipart/form-data">
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-name">Dish
+									Name</span> <input type="text" class="form-control" id="name"
+									th:field="*{name}" aria-label="Dish Name"
+									aria-describedby="inputGroup-name" required>
 							</div>
-							<div class="mb-3">
-								<label for="description" class="form-label">Description</label>
+							<div th:if="${#fields.hasErrors('name')}"
+								class="alert alert-danger">
+								<span th:errors="*{name}"></span>
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text">Description</span>
 								<textarea class="form-control" id="description" rows="3"
-									th:field="*{description}" required></textarea>
+									th:field="*{description}" aria-label="Description" required></textarea>
 							</div>
-							<div class="mb-3">
-								<label for="category" class="form-label">Category</label> <select
-									class="form-select" id="category" th:field="*{category}"
+							<div class="input-group mb-3">
+								<label class="input-group-text" for="category">Category</label>
+								<select class="form-select" id="category" th:field="*{category}"
 									required>
 									<option value="" disabled selected>Select a category</option>
 									<option th:each="category : ${categories}"
 										th:value="${category.id}" th:text="${category.name}"></option>
 								</select>
-								<div th:if="${#fields.hasErrors('category')}"
-									class="alert alert-danger">
-									<span th:errors="*{category}"></span>
-								</div>
 							</div>
+							<div th:if="${#fields.hasErrors('category')}"
+								class="alert alert-danger">
+								<span th:errors="*{category}"></span>
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-price">Price</span>
+								<input type="number" class="form-control" id="price"
+									th:field="*{price}" aria-label="Price"
+									aria-describedby="inputGroup-price" min="0" step="0.01"
+									required>
+							</div>
+							<div th:if="${#fields.hasErrors('price')}"
+								class="alert alert-danger">
+								<span th:errors="*{price}"></span>
+							</div>
+
+							<!-- Image Upload without Input Group (file inputs usually don't use input groups) -->
 							<div class="mb-3">
-								<label for="price" class="form-label">Price</label> <input
-									type="number" class="form-control" id="price"
-									th:field="*{price}" min="0" step="0.01" required>
-								<div th:if="${#fields.hasErrors('price')}"
-									class="alert alert-danger">
-									<span th:errors="*{price}"></span>
+								<label for="image">Dish Image:</label> <input type="file"
+									class="form-control" id="image" name="image">
+								<div class="mb-2">
+									<img id="imagePreview"
+										style="max-height: 200px; display: none;">
 								</div>
 							</div>
-							<div class="mb-3">
-								<label for="image" class="form-label">Dish Image</label>
-								<div class="file-drop-area"
-									style="border: 2px dashed #007bff; padding: 20px; cursor: pointer;">
-									<span class="file-message">Drag & Drop or click to
-										upload</span> <input type="file" name="image" id="image"
-										class="file-input" style="display: none;">
-								</div>
-								<div class="d-flex justify-content-center">
-									<img class="img-fluid" id="imagePreview" src=""
-										alt="Image Preview"
-										style="display: none; width: 200px; height: 200px; margin-top: 10px;" />
-								</div>
-							</div>
-							<button type="submit" class="btn btn-primary">Add Dish</button>
+							<button type="submit" class="btn btn-primary mt-3">Add
+								Dish</button>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script th:src="@{/javascript/javascript.js}"></script>
+	<script th:src="@{/javascript/imageUpload.js}"></script>
 </body>
 </html>

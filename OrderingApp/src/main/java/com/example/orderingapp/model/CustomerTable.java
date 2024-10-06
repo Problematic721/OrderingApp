@@ -1,7 +1,5 @@
 package com.example.orderingapp.model;
 
-import java.util.UUID;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -9,16 +7,20 @@ import jakarta.validation.constraints.*;
 public class CustomerTable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-	
-	@NotBlank (message = "Table must not be empty")
-	private String tableName;
-	
-	@Column(nullable = false, unique = true, updatable = false)
-    private String tableCode;
+	private long id;
 
-	public CustomerTable(String tableName) {
+	@NotBlank(message = "Table must not be empty")
+	private String tableName;
+
+	@Column(nullable = false, unique = true, updatable = false)
+	private String tableCode;
+
+	public CustomerTable(String tableName, String tableCode) {
 		setTableName(tableName);
+		setTableCode(tableCode);
+	}
+
+	public CustomerTable() {
 	}
 
 	public long getId() {
@@ -41,9 +43,8 @@ public class CustomerTable {
 		return tableCode;
 	}
 
-	public void setTableCode() {
-		this.tableCode = UUID.randomUUID().toString();
+	public void setTableCode(String tableCode) {
+		this.tableCode = tableCode;
 	}
-	
-	
+
 }

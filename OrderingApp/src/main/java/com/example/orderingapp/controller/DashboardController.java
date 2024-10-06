@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.orderingapp.model.Dish;
 import com.example.orderingapp.service.CategoryService;
@@ -26,9 +27,12 @@ import jakarta.validation.Valid;
 @Controller
 public class DashboardController {
 
-	@Autowired
-	private DishService dishService;
-	
+	private final DishService dishService;
+
+	public DashboardController(DishService dishService) {
+		this.dishService = dishService;
+	}
+
 	@Autowired
 	private CategoryService categoryService;
 
@@ -54,28 +58,59 @@ public class DashboardController {
 			return "add-dish";
 		}
 		if (!image.isEmpty()) {
-			String imageDirectory = System.getProperty("user.dir") + "/uploads";
-			String uniqueFilename = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-			Path imagePath = Paths.get(imageDirectory, uniqueFilename);
-			Files.createDirectories(imagePath.getParent());
-			image.transferTo(imagePath.toFile());
-			dish.setImageUrl("uploads/" + uniqueFilename);
+			String filename = dishService.saveImage(image);
+			dish.setImageUrl(filename);
 		}
-		dishService.saveDish(dish);
+		dishService.createDish(dish);
 		return "redirect:/dashboard";
 	}
 
 	@GetMapping("/dashboard/details/{dishId}")
 	public String viewDishDetails(@PathVariable Long dishId, Model model) {
-		Dish dish = dishService.getDishById(dishId);
+		model.addAttribute("activePage", "dashboard");
+		Dish dish = dishService.getDish(dishId);
+		model.addAttribute("categories", categoryService.getAllCategories());
 		model.addAttribute("dish", dish);
-		return "details";
+		return "dish-details";
 	}
-	
+
+	@PostMapping("/dashboard/details/update/{dishId}")
+	public String updateDish(@PathVariable Long dishId, @Valid @ModelAttribute Dish updatedDish, BindingResult result,
+			@RequestParam("deleteImage") boolean deleteImageFlag, @RequestParam("image") MultipartFile imageFile,
+			RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
+			return "/dashboard/details/" + dishId;
+		}
+		Dish existingDish = dishService.getDish(dishId);
+		try {
+
+			if (deleteImageFlag && existingDish.getImageUrl() != null) {
+				dishService.deleteImage(existingDish.getImageUrl());
+				existingDish.setImageUrl(null);
+			}
+			if (!imageFile.isEmpty()) {
+				if (updatedDish.getImageUrl() != null) {
+					dishService.deleteImage(updatedDish.getImageUrl());
+				}
+				String newImageUrl = dishService.saveImage(imageFile);
+				existingDish.setImageUrl(newImageUrl);
+			}
+			existingDish.setName(updatedDish.getName());
+			existingDish.setDescription(updatedDish.getDescription());
+			existingDish.setPrice(updatedDish.getPrice());
+			existingDish.setCategory(updatedDish.getCategory());
+			redirectAttributes.addFlashAttribute("successMessage", "Dish updated successfully.");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Failed to update dish.");
+		}
+		dishService.updateDish(dishId, existingDish);
+		return "redirect:/dashboard/details/" + dishId;
+	}
+
 	@GetMapping("/dashboard/remove/{dishId}")
 	public String removeDish(@PathVariable Long dishId) {
-        dishService.deleteById(dishId);
-        return "redirect:/dashboard";
-    }
-	
+		dishService.deleteDish(dishId);
+		return "redirect:/dashboard";
+	}
+
 }

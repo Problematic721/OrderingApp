@@ -23,7 +23,7 @@
 			<div class="col-12 col-sm-6 col-md-4 mb-4" th:each="dish : ${category.dishes}">
 				<div class="card">
 					<img
-						th:src="${dish.imageUrl != null && dish.imageUrl != '' ?  dish.imageUrl : '/img/placeholder.jpg'}"
+						th:src="${dish.imageUrl != null && dish.imageUrl != '' ? '/uploads/' + dish.imageUrl : '/img/placeholder.jpg'}"
 						alt="Dish Image" class="card-img-top dish-img">
 					<div class="card-body">
 						<h5 class="card-title" th:text="${dish.name}"></h5>
