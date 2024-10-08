@@ -2,14 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <title>Add to Menu</title>
 </head>
 <body>
-	<div th:replace="~{'fragments/navbar' :: navbar}"
-		th:with="activePage='dashboard'"></div>
+	<div th:replace="~{'fragments/navbar' :: navbar}" th:with="activePage='dashboard'"></div>
 
 	<div class="container">
 		<div class="row justify-content-center">
@@ -19,59 +17,43 @@
 						<h2>Add Dish to Menu</h2>
 					</div>
 					<div class="card-body">
-						<form th:action="@{/dashboard/add}" th:object="${dish}"
-							method="post" enctype="multipart/form-data">
+						<form th:action="@{/dashboard/add}" th:object="${dish}" method="post" enctype="multipart/form-data">
 							<div class="input-group mb-3">
-								<span class="input-group-text" id="inputGroup-name">Dish
-									Name</span> <input type="text" class="form-control" id="name"
-									th:field="*{name}" aria-label="Dish Name"
+								<span class="input-group-text" id="inputGroup-name">Dish Name</span> <input type="text" class="form-control" id="name" th:field="*{name}" aria-label="Dish Name"
 									aria-describedby="inputGroup-name" required>
 							</div>
-							<div th:if="${#fields.hasErrors('name')}"
-								class="alert alert-danger">
+							<div th:if="${#fields.hasErrors('name')}" class="alert alert-danger">
 								<span th:errors="*{name}"></span>
 							</div>
 							<div class="input-group mb-3">
 								<span class="input-group-text">Description</span>
-								<textarea class="form-control" id="description" rows="3"
-									th:field="*{description}" aria-label="Description" required></textarea>
+								<textarea class="form-control" id="description" rows="3" th:field="*{description}" aria-label="Description" required></textarea>
 							</div>
 							<div class="input-group mb-3">
-								<label class="input-group-text" for="category">Category</label>
-								<select class="form-select" id="category" th:field="*{category}"
-									required>
+								<label class="input-group-text" for="category">Category</label> <select class="form-select" id="category" th:field="*{category}" required>
 									<option value="" disabled selected>Select a category</option>
-									<option th:each="category : ${categories}"
-										th:value="${category.id}" th:text="${category.name}"></option>
+									<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
 								</select>
 							</div>
-							<div th:if="${#fields.hasErrors('category')}"
-								class="alert alert-danger">
+							<div th:if="${#fields.hasErrors('category')}" class="alert alert-danger">
 								<span th:errors="*{category}"></span>
 							</div>
 							<div class="input-group mb-3">
-								<span class="input-group-text" id="inputGroup-price">Price</span>
-								<input type="number" class="form-control" id="price"
-									th:field="*{price}" aria-label="Price"
-									aria-describedby="inputGroup-price" min="0" step="0.01"
-									required>
+								<span class="input-group-text" id="inputGroup-price">Price</span> <input type="number" class="form-control" id="price" th:field="*{price}" aria-label="Price"
+									aria-describedby="inputGroup-price" min="0" step="0.01" required>
 							</div>
-							<div th:if="${#fields.hasErrors('price')}"
-								class="alert alert-danger">
+							<div th:if="${#fields.hasErrors('price')}" class="alert alert-danger">
 								<span th:errors="*{price}"></span>
 							</div>
 
 							<!-- Image Upload without Input Group (file inputs usually don't use input groups) -->
 							<div class="mb-3">
-								<label for="image">Dish Image:</label> <input type="file"
-									class="form-control" id="image" name="image">
+								<label for="image">Dish Image:</label> <input type="file" class="form-control" id="image" name="image">
 								<div class="mb-2">
-									<img id="imagePreview"
-										style="max-height: 200px; display: none;">
+									<img id="imagePreview" style="max-height: 200px; display: none;">
 								</div>
 							</div>
-							<button type="submit" class="btn btn-primary mt-3">Add
-								Dish</button>
+							<button type="submit" class="btn btn-primary mt-3">Add Dish</button>
 						</form>
 					</div>
 				</div>

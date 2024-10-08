@@ -2,10 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <link rel="stylesheet" th:href="@{/css/style.css}" />
 <title>Dashboard</title>
 </head>
@@ -17,32 +15,26 @@
 		</div>
 		<h1 class="text-center">Menu</h1>
 		<div th:each="category : ${categories}" th:if="${category.dishes.size() > 0}">
-		<h3 th:text="${category.name}" class="mt-4"></h3>
-		<hr>
-		<div class="row">
-			<div class="col-12 col-sm-6 col-md-4 mb-4" th:each="dish : ${category.dishes}">
-				<div class="card">
-					<img
-						th:src="${dish.imageUrl != null && dish.imageUrl != '' ? '/uploads/' + dish.imageUrl : '/img/placeholder.jpg'}"
-						alt="Dish Image" class="card-img-top dish-img">
-					<div class="card-body">
-						<h5 class="card-title" th:text="${dish.name}"></h5>
-						<p class="card-text description" th:text="${dish.description}"></p>
-						<p class="card-text">
-							<strong th:text="'NT$: ' + ${dish.price}"></strong>
-						</p>
-						<a th:href="@{/dashboard/remove/{dishId} (dishId=${dish.id})}"
-							class="btn btn-danger float-end"> <i class="bi bi-trash"></i>
-							Remove
-						</a> <a th:href="@{/dashboard/details/{dishId} (dishId=${dish.id})}"
-							class="btn btn-info"> View Details </a>
+			<h3 th:text="${category.name}" class="mt-4"></h3>
+			<hr>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-md-4 mb-4" th:each="dish : ${category.dishes}">
+					<div class="card">
+						<img th:src="${dish.imageUrl != null && dish.imageUrl != '' ? '/uploads/' + dish.imageUrl : '/img/placeholder.jpg'}" alt="Dish Image" class="card-img-top dish-img">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${dish.name}"></h5>
+							<p class="card-text description" th:text="${dish.description}"></p>
+							<p class="card-text">
+								<strong th:text="'NT$: ' + ${dish.price}"></strong>
+							</p>
+							<a th:href="@{/dashboard/remove/{dishId} (dishId=${dish.id})}" class="btn btn-danger float-end"> <i class="bi bi-trash"></i> Remove
+							</a> <a th:href="@{/dashboard/details/{dishId} (dishId=${dish.id})}" class="btn btn-info"> View Details </a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

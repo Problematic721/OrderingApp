@@ -29,7 +29,6 @@ public class CategoryController {
     public String viewCategories(Model model) {
 		model.addAttribute("activePage", "categories");
 		List<Category> categories = categoryService.getAllCategories();
-		 model.addAttribute("category", new Category());
 		model.addAttribute("categories", categories);
 		return "categories";
 	}
