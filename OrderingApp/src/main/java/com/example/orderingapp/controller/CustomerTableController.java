@@ -1,5 +1,10 @@
 package com.example.orderingapp.controller;
 
+import java.io.IOException;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -7,9 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.orderingapp.model.CustomerTable;
 import com.example.orderingapp.service.CustomerTableService;
+import com.example.orderingapp.utils.QRCodeGenerator;
+import com.google.zxing.WriterException;
 
 @Controller
 public class CustomerTableController {
@@ -54,4 +62,28 @@ public class CustomerTableController {
 		customerTableService.updateTable(tableId, tableName);
 		return "tables";
 	}
+	
+	@GetMapping("/generateQr/{tableCode}")
+    public ResponseEntity<byte[]> generateQrCode(@PathVariable String tableCode) throws IOException, WriterException {
+    	String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+    	String url = baseUrl + "/menu?tableCode=" + tableCode;
+    	System.out.println("QR URL: " + url);
+        byte[] qrImage = QRCodeGenerator.getQRCodeImage(url, 200, 200);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"qr-code.png\"")
+                .contentType(MediaType.IMAGE_PNG)
+                .body(qrImage);
+    }
+    
+    @GetMapping("/generateQr/{tableCode}/download")
+    public ResponseEntity<byte[]> downloadQrCode(@PathVariable String tableCode) throws IOException, WriterException {
+        String url = "https://your-domain.com/menu?tableCode=" + tableCode;
+        byte[] qrImage = QRCodeGenerator.getQRCodeImage(url, 200, 200);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"table_" + tableCode + "_qr.png\"")
+                .contentType(MediaType.IMAGE_PNG)
+                .body(qrImage);
+    }
 }
