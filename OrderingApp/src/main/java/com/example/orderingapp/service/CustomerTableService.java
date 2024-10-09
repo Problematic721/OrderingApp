@@ -34,6 +34,10 @@ public class CustomerTableService {
 		return customerTableRepository.findById(tableId)
 			.orElseThrow(() -> new IllegalArgumentException("Table not found"));
 	}
+	
+	public CustomerTable getTableByTableCode (String tableCode) {
+		return customerTableRepository.findByTableCode(tableCode);
+	}
 
 	public void updateTable(Long tableId, String tableName) {
 		CustomerTable existingTable = this.getTable(tableId);
