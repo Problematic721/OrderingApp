@@ -1,42 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http:www.thymeleaf.org">
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
+<link rel="stylesheet" th:href="@{/css/style.css}">
 <meta charset="UTF-8">
-<title>Our Menu</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="/static/css/styles.css">
+<title>Restaurant's Name</title>
 </head>
 <body>
-	<header class="bg-dark text-white p-3">
-		<div class="container-fluid d-flex justify-content-between align-items-center">
-			<div class="logo">
-				<h1 class="h3 mb-0">Restaurant Logo</h1>
-			</div>
-			<div class="cart">
-				<a href="/cart" class="text-white"> <img src="/static/images/cart-icon.png" alt="Cart" class="cart-icon" style="width: 30px;">
-				</a>
+	<h1 class="text-center">Our Menu</h1>
+	<div class="container mt-4">
+		<div th:each="category : ${categories}">
+			<!-- Category Heading -->
+			<h4 class="category-heading" th:text="${category.name}"></h4>
+			<hr>
+			<div th:each="dish : ${category.dishes}" class="row align-items-center mb-3">
+				<div class="menu-container">
+					<div class="mb-3">
+						<img th:src="${dish.imageUrl != null && dish.imageUrl != '' ? '/uploads/' + dish.imageUrl : '/img/placeholder.jpg'}" alt="Dish Image" class="card-img-top menu-img">
+					</div>
+					<div class="ms-3">
+						<h5 class="mb-1" th:text="${dish.name}"></h5>
+						<p class="mb-1 text-muted" th:text="${dish.description}"></p>
+						<span class="fw-bold" th:text="'$' + ${dish.price}"></span>
+						<button class="btn btn-outline-secondary btn-sm" th:attr="data-dish-id=${dish.id}, data-dish-name=${dish.name}, data-dish-price=${dish.price}" onclick="addToCart(this)">Add to Cart</button>
+					</div>
+				</div>
 			</div>
 		</div>
-	</header>
-</body>
-<main class="container mt-5">
-	<h2 class="text-center mb-4">Our Menu</h2>
-	<div class="row">
-		<div class="col-md-4 mb-4" th:each="item : ${menuItems}">
-			<div class="card h-100">
-				<img th:src="@{${item.image}}" alt="Menu Item Image" class="card-img-top menu-item-image">
-				<div class="card-body">
-					<h5 class="card-title" th:text="${item.name}">Menu Item Name</h5>
-					<p class="card-text" th:text="${item.description}">Description of the item.</p>
-					<p class="card-text text-muted" th:text="'Price: $' + ${item.price}">Price: $0.00</p>
-					<button class="btn btn-success" th:onclick="'addToCart(' + ${item.id} + ')'">Add to Cart</button>
+		<button id="viewCartBtn" class="btn btn-primary" onclick="showCart()">
+			<i class="bi bi-cart" style="font-size: 24px;"></i> <span id="cartBadge" class="badge rounded-pill bg-danger" style="position: absolute; top: -5px; right: -10px;">0</span>
+		</button>
+	</div>
+	<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="cart-content">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Order</button>
 				</div>
 			</div>
 		</div>
 	</div>
-</main>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/static/javascript/cart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+	<script th:src="@{javascript/cart.js}"></script>
+</body>
 </html>

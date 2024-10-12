@@ -37,6 +37,7 @@
 								<img th:attr="id='qrImage-' + ${table.id}" src="" alt="QR Code" style="max-width: 200px;">
 							</div>
 							<div class="modal-footer">
+								<button class="btn btn-outline-secondary" th:attr="id='copyLinkBtn-' + ${table.id}, data-table-code=${table.tableCode}" onclick="copyToClipboard(this)">Copy Link</button>
 								<button class="btn btn-primary" th:onclick="|downloadQRCode('${table.id}')|">Download QR Code</button>
 							</div>
 						</div>
@@ -64,14 +65,19 @@
 			var qrModals = document.querySelectorAll('.modal');
 			qrModals.forEach(function(modal) {
 				modal.addEventListener('show.bs.modal', function(event) {
-					var button = event.relatedTarget; 
+					var button = event.relatedTarget;
 					var tableId = button.getAttribute('data-bs-target').split(
-							'-')[1]; 
-					var tableCode = button.getAttribute('data-table-code'); 
-					showQRCode(tableId, tableCode); 
+							'-')[1];
+					var tableCode = button.getAttribute('data-table-code');
+					showQRCode(tableId, tableCode);
 				});
 			});
 		});
+		function copyToClipboard(buttonElement) {
+			var tableCode = buttonElement.getAttribute('data-table-code');
+		    const fullLink = window.location.origin + '/menu?tableCode=' + tableCode;
+			navigator.clipboard.writeText(fullLink)
+		}
 	</script>
 </body>
 </html>
