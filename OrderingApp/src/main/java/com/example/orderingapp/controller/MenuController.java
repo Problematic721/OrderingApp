@@ -3,8 +3,6 @@ package com.example.orderingapp.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.orderingapp.model.CustomerTable;
@@ -25,11 +23,6 @@ public class MenuController {
         this.categoryService = categoryService;
     }
 	
-	@GetMapping("/")
-	public String showHome() {
-		return "redirect:/menu";
-	}
-	
 	@GetMapping("/menu")
 	public String showMenu(@RequestParam(required = false) String tableCode, Model model) {
 	    model.addAttribute("dishes", dishService.getAllDishes());
@@ -44,11 +37,6 @@ public class MenuController {
 	        }
 	    }
 	    return "generic-menu";
-	}
-	
-	@PostMapping("/menu/{tableId}/cart") 
-	public String addToCart (@PathVariable Long tableId)  {
-        return "redirect:/menu/" + tableId;
 	}
 }
 	

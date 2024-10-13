@@ -2,6 +2,8 @@ package com.example.orderingapp.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -16,6 +18,7 @@ public class Category {
 	private String name;
 	
 	@OneToMany(mappedBy = "category")
+	@JsonIgnore
     private Set<Dish> dishes;
 
 	public long getId() {

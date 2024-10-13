@@ -23,7 +23,7 @@
 						<h5 class="mb-1" th:text="${dish.name}"></h5>
 						<p class="mb-1 text-muted" th:text="${dish.description}"></p>
 						<span class="fw-bold" th:text="'$' + ${dish.price}"></span>
-						<button class="btn btn-outline-secondary btn-sm" th:attr="data-dish-id=${dish.id}, data-dish-name=${dish.name}, data-dish-price=${dish.price}" onclick="addToCart(this)">Add to Cart</button>
+						<button class="btn btn-outline-secondary btn-sm add-to-cart" th:attr="data-dish-id=${dish.id}, data-dish-name=${dish.name}, data-dish-price=${dish.price}">Add to Cart</button>
 					</div>
 				</div>
 			</div>
@@ -32,18 +32,22 @@
 			<i class="bi bi-cart" style="font-size: 24px;"></i> <span id="cartBadge" class="badge rounded-pill bg-danger" style="position: absolute; top: -5px; right: -10px;">0</span>
 		</button>
 	</div>
-	<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+	<div id="cartModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+					<h5 class="modal-title">Your Cart</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body" id="cart-content">
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Order</button>
+				<div class="modal-body">
+					<div id="cartItems" class="list-group">
+					</div>
+					<div class="modal-footer">
+						<div class="total-price">
+							<strong>Total:</strong> <span id="totalPrice">$0.00</span>
+						</div>
+						<button type="button" class="btn btn-primary" id="placeOrderButton" onclick="placeOrder()">Place Order</button>
+					</div>
 				</div>
 			</div>
 		</div>

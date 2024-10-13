@@ -14,7 +14,7 @@ function showAddForm() {
 
 function showQRCode(id, tableCode) {
 	var qrImageElement = document.getElementById('qrImage-' + id);
-	var qrImageUrl = '/generateQr/' + tableCode;
+	var qrImageUrl = '/tables/generateQr/' + tableCode;
 
 	qrImageElement.src = qrImageUrl;
 }
