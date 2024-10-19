@@ -23,6 +23,11 @@ public class MenuController {
         this.categoryService = categoryService;
     }
 	
+    @GetMapping("/")
+    public String showMain (Model model) {
+    	return "redirect:/menu";
+    }
+    
 	@GetMapping("/menu")
 	public String showMenu(@RequestParam(required = false) String tableCode, Model model) {
 	    model.addAttribute("dishes", dishService.getAllDishes());

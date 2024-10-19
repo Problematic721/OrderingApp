@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -25,6 +26,7 @@ import com.example.orderingapp.service.DishService;
 import jakarta.validation.Valid;
 
 @Controller
+@RequestMapping("dashboard")
 public class DashboardController {
 
 	private final DishService dishService;
@@ -36,14 +38,14 @@ public class DashboardController {
 	@Autowired
 	private CategoryService categoryService;
 
-	@GetMapping("/dashboard")
+	@GetMapping("")
 	public String viewDashboard(Model model) {
 		model.addAttribute("activePage", "dashboard");
 		model.addAttribute("categories", categoryService.getAllCategories());
 		return "dashboard";
 	}
 
-	@GetMapping("/dashboard/add")
+	@GetMapping("/add")
 	public String showAddDishForm(Model model) {
 		model.addAttribute("activePage", "dashboard");
 		model.addAttribute("categories", categoryService.getAllCategories());
@@ -51,7 +53,7 @@ public class DashboardController {
 		return "add-dish";
 	}
 
-	@PostMapping("dashboard/add")
+	@PostMapping("/add")
 	public String addDish(@Valid @ModelAttribute Dish dish, @RequestParam MultipartFile image, BindingResult result)
 			throws IOException {
 		if (result.hasErrors()) {
@@ -65,7 +67,7 @@ public class DashboardController {
 		return "redirect:/dashboard";
 	}
 
-	@GetMapping("/dashboard/details/{dishId}")
+	@GetMapping("/details/{dishId}")
 	public String viewDishDetails(@PathVariable Long dishId, Model model) {
 		model.addAttribute("activePage", "dashboard");
 		Dish dish = dishService.getDish(dishId);
@@ -74,7 +76,7 @@ public class DashboardController {
 		return "dish-details";
 	}
 
-	@PostMapping("/dashboard/details/update/{dishId}")
+	@PostMapping("/details/update/{dishId}")
 	public String updateDish(@PathVariable Long dishId, @Valid @ModelAttribute Dish updatedDish, BindingResult result,
 			@RequestParam("deleteImage") boolean deleteImageFlag, @RequestParam("image") MultipartFile imageFile,
 			RedirectAttributes redirectAttributes) {
@@ -107,7 +109,7 @@ public class DashboardController {
 		return "redirect:/dashboard/details/" + dishId;
 	}
 
-	@GetMapping("/dashboard/remove/{dishId}")
+	@GetMapping("/remove/{dishId}")
 	public String removeDish(@PathVariable Long dishId) {
 		dishService.deleteDish(dishId);
 		return "redirect:/dashboard";

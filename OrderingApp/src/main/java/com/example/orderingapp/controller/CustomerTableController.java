@@ -29,7 +29,7 @@ public class CustomerTableController {
         this.customerTableService = customerTableService;
     }
 	
-	@GetMapping("/")
+	@GetMapping("")
 	public String viewTables(Model model) {
 		model.addAttribute("activePage","tables");
         model.addAttribute("tables", customerTableService.getAllTables());
